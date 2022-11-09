@@ -31,6 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # My apps:
+    'expense_tracker_app',
+    'users',
+    # Third party apps:
+
+    # Django default apps:
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

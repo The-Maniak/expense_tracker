@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+<p>
+    <a href="{% url 'expense_tracker_app:index' %}">Home page</a>
+    <a href="{% url 'expense_tracker_app:categories_function' %}">Categories F</a>
+    <a href="{% url 'expense_tracker_app:categories_class' %}">Categories C</a>
+    Kolejne hiperłącza
+    {% if user.is_authenticated %}
+    Hello, {{ user.username }}.
+    <a href="{% url 'users:logout' %}">Log out</a>
+    {% else %}
+    <a href="{% url 'users:login' %}">Log in</a>
+    {% endif %}
+</p>
+<div>{% block page_header %}{%endblock page_header %}</div>
+<div>{% block content %}{% endblock content%}</div>
+
+</body>
+</html>
