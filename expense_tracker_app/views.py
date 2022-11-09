@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
 from .models import Category, Expense
 
 
@@ -9,6 +9,7 @@ def index(request):
     return render(request, 'expense_tracker_app/index.html')
 
 
+@login_required()
 def categories(request):
     """Page where user can see his expenses. Displayed as function."""
     categories = Category.objects.all()
@@ -21,6 +22,7 @@ class CategoryView(ListView):
     model = Category
 
 
+@login_required()
 def category(request, category_id):
     """Page displaying users expenses in a particular category."""
     category = Category.objects.get(id=category_id)
