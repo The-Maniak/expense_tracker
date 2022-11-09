@@ -10,12 +10,20 @@ def index(request):
 
 
 def categories(request):
-    """Page where user can see his expenses."""
+    """Page where user can see his expenses. Displayed as function."""
     categories = Category.objects.all()
     context = {'categories': categories}
     return render(request, 'expense_tracker_app/categories.html', context)
 
+
 class CategoryView(ListView):
+    """Page where user can see his expenses. Displayed as class."""
     model = Category
 
 
+def category(request, category_id):
+    """Page displaying users expenses in a particular category."""
+    category = Category.objects.get(id=category_id)
+    expenses = Expense.objects.filter(category=category)
+    context = {'expenses': expenses}
+    return render(request, 'expense_tracker_app/category.html', context)

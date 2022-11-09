@@ -10,4 +10,6 @@ urlpatterns =[
     path('categories_function/', views.categories, name='categories_function'),
     # Expense categories page (class):
     path('categories_class/', views.CategoryView.as_view(), name='categories_class'),
+
+    path('category/<int:category_id>/', views.category, name='category'),
 ]

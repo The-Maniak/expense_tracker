@@ -1,7 +1,7 @@
 {% extends "expense_tracker_app/base.html" %}
 
 {% block title %}
-ET - {{ category }} - expenses
+ET - {{ category.text }} - expenses
 {% endblock title %}
 
 {% block page_header %}
@@ -11,8 +11,9 @@ ET - {{ category }} - expenses
 {% block content %}
 <ul>
     {% for expense in expenses %}
-    <li> {{ expense.date added|date:'M d, Y' }} -
-        {{ expense.description }} - {{ expense.amount }}</li>
+    <li> {{ expense.date_added|date:'Y-M-d' }} -
+        {{ expense.description }} -
+        {{ expense.amount }}</li>
     {% empty %}
     <li>No expenses to be listed in this category.</li>
     {% endfor %}
