@@ -13,4 +13,6 @@ urlpatterns = [
     path('categories_class/', login_required(views.CategoryView.as_view()), name='categories_class'),
     # Individual expenses page per category:
     path('category/<int:category_id>/', views.category, name='category'),
+    # Page for adding new categories of expenses:
+    path('add_category/', views.add_category, name='add_category'),
 ]

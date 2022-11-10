@@ -11,7 +11,7 @@ ET - Categories
 {% block content %}
 <ul>
     {% for object in object_list %}
-    <li>{{ object }}</li>
+    <li><a href="{% url 'expense_tracker_app:category' object.id %}">{{ object }}</a></li>
     {% empty %}
     <li>No categories have been added yet.</li>
     {% endfor %}
