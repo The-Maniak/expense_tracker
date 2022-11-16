@@ -8,5 +8,6 @@ ET - home page
 
 {% block content %}
 <p>Content</p>
-<a href="{% url 'expense_tracker_app:add_category' %}">Add a new category</a>
+<a href="{% url 'expense_tracker_app:add_category' %}">Add a category</a>
+<a href="{% url 'expense_tracker_app:add_expense' %}">Add a expense</a>
 {% endblock content %}

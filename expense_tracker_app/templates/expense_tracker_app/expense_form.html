@@ -1,0 +1,19 @@
+{% extends "expense_tracker_app/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+ET - Add expense
+{% endblock title %}
+
+{% block page_header %}
+<p>Expense tracker - Add expense header</p>
+{% endblock page_header %}
+
+{% block content %}
+
+<p>Category: {% render_field form.category class="custom-select mb-4" autocomplete="off" %}</p>
+<p>Amount: {% render_field form.amount  %}</p>
+<p>Date: {% render_field form.date_added class="DateInput" %}</p>
+<p>Description: {% render_field form.description class="TextInput" %}</p>
+<p> content </p>
+{% endblock content %}
