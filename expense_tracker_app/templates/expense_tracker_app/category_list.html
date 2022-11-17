@@ -10,10 +10,11 @@ ET - Categories
 
 {% block content %}
 <ul>
-    {% for object in object_list %}
-    <li><a href="{% url 'expense_tracker_app:category' object.id %}">{{ object }}</a></li>
+    {% for category in object_list %}
+    <li><a href="{% url 'expense_tracker_app:category' category.id %}">{{ category }}</a></li>
     {% empty %}
     <li>No categories have been added yet.</li>
     {% endfor %}
 </ul>
+<a href="{% url 'expense_tracker_app:add_category' %}">Add a new category</a>
 {% endblock content %}

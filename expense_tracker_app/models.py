@@ -25,6 +25,12 @@ class Expense(models.Model):
 
     class Meta:
         verbose_name_plural = 'expenses'
+        ordering = ('date_added',) # sprawdzić, cze to zadziała tutaj
 
     def __str__(self):
         return f"{self.date_added} - {self.category} - {self.description} - {self.amount}"
+
+    def save(self, *args, **kwargs):
+#        if not self.slug:
+#            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)

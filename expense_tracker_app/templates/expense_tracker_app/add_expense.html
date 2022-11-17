@@ -15,5 +15,9 @@ ET - Add expense
 <p>Amount: {% render_field form.amount  %}</p>
 <p>Date: {% render_field form.date_added class="DateInput" %}</p>
 <p>Description: {% render_field form.description class="TextInput" %}</p>
-<p> content </p>
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<button name="submit">Add expense</button>
+</form>
 {% endblock content %}

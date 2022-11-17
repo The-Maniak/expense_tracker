@@ -18,4 +18,5 @@ ET - {{ category.text }} - expenses
     <li>No expenses to be listed in this category.</li>
     {% endfor %}
 </ul>
+<a href="{% url 'expense_tracker_app:add_expense' %}">Add a expense</a>
 {% endblock content %}

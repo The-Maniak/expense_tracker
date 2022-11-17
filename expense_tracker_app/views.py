@@ -25,6 +25,10 @@ class CategoryView(ListView):
     The @login_required decorator for the class view is applied in the views.py file."""
     model = Category
 
+    def get_queryset(self):
+        return Category.objects.filter(owner= self.request.user)
+
+
 @login_required()
 def category(request, category_id):
     """Page displaying users expenses in a particular category."""
@@ -54,16 +58,11 @@ def add_category(request):
     return render(request, 'expense_tracker_app/add_category.html', context)
 
 
-# def add_expense(request):
-#     """Add a new expense to the tracker."""
-#     form = ExpenseForm()
-#     context = {'form': form}
-#     return render(request, "expense_tracker_app/add_expense.html", context)
-
-
 class AddExpense(CreateView):
     model = Expense
-    fields = '__all__'
+    fields = ('category', 'amount', 'date_added', 'description')
+#    form_class = ExpenseForm
+    success_url = '/'
 
     def get_form_class(self):
         modelform = super().get_form_class()
