@@ -19,18 +19,18 @@ class Category(models.Model):
 class Expense(models.Model):
     """Individual expenses inserted in the tracker."""
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     date_added = models.DateField(default=now())
     description = models.CharField(max_length=100)
 
     class Meta:
         verbose_name_plural = 'expenses'
-        ordering = ('date_added',) # sprawdzić, cze to zadziała tutaj
+        ordering = ('date_added',)  # sprawdzić, cze to zadziała tutaj
 
     def __str__(self):
         return f"{self.date_added} - {self.category} - {self.description} - {self.amount}"
 
     def save(self, *args, **kwargs):
-#        if not self.slug:
-#            self.slug = slugify(self.title)
+        #        if not self.slug:
+        #            self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
