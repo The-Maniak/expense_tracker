@@ -1,9 +1,10 @@
 from django import forms
-from .models import Category#, Expense
+from .models import Category #, Expense
 
 
 class CategoryForm(forms.ModelForm):
     class Meta:
+        model = Category
         fields = ['text']
         labels = {'text': ''}
 
@@ -11,8 +12,7 @@ class CategoryForm(forms.ModelForm):
 class ExpenseForm(forms.Form):
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
-        initial='Select the category',
-#        limit_choices_to=
+        #initial='Select the category',
     )
     amount = forms.DecimalField(max_digits=10, decimal_places=2)
     date_added = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
@@ -22,5 +22,4 @@ class ExpenseForm(forms.Form):
 class DateForm(forms.Form):
     start = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     end = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-
 
