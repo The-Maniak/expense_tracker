@@ -1,0 +1,18 @@
+{% extends "expense_tracker_app/base.html" %}
+
+{% block title %}
+ET - Delete expense
+{% endblock title %}
+{% block page_header %}
+<p>Expense tracker - delete expense header</p>
+{% endblock page_header %}
+
+{% block content %}
+
+<p>Delete expense:</p>
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    {{ form }}
+    <input type="submit" value="Confirm">
+</form>
+{% endblock content %}

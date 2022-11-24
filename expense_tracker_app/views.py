@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.widgets import AdminDateWidget
 from django.http import Http404
+from django.urls import reverse, reverse_lazy
 import plotly.express as px
 from .models import Category, Expense
 from .forms import CategoryForm, DateForm, ExpenseForm
@@ -85,14 +86,27 @@ class AddExpense(CreateView):
     model = Expense
     fields = ('category', 'amount', 'date_added', 'description')
     #    form_class = ExpenseForm
-    success_url = '/'
+    success_url = '/' # trzeba poprawic
 
     def get_form(self, form_class=None):
         form = super(AddExpense, self).get_form(form_class)
-        form.fields['date_added'] .widget = AdminDateWidget(attrs={'type': 'date'})
+        form.fields['date_added'].widget = AdminDateWidget(attrs={'type': 'date'})
         return form
 
     def get_form_class(self):
         modelform = super().get_form_class()
         modelform.base_fields['category'].limit_choices_to = {'owner_id': self.request.user}
         return modelform
+
+
+class EditExpense(UpdateView):
+    model = Expense
+    pk_url_kwarg = 'expense_id'
+    fields = ('category', 'amount', 'date_added', 'description')
+    success_url = '/' # trzeba poprawic
+
+
+class DeleteExpense(DeleteView):
+    model = Expense
+    pk_url_kwarg = 'expense_id'
+    success_url = '/'

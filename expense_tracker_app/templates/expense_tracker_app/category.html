@@ -24,7 +24,10 @@ ET - {{ category.text }} - expenses
     {% for expense in expenses %}
     <li> {{ expense.date_added|date:'Y-M-d' }} -
         {{ expense.description }} -
-        {{ expense.amount }}</li>
+        {{ expense.amount }} -
+        <a href="{% url 'expense_tracker_app:edit_expense' expense.id %}"> edit </a> -
+        <a href="{% url 'expense_tracker_app:delete_expense' expense.id %}"> delete </a>
+    </li>
     {% empty %}
     <li>No expenses to be listed in this category.</li>
     {% endfor %}
