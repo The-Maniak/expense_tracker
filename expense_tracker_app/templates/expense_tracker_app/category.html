@@ -9,29 +9,41 @@ ET - {{ category.text }} - expenses
 {% endblock page_header %}
 
 {% block content %}
-<h1>Category {{ category }} </h1>
+<h1> {{ category }} </h1>
 {% if expenses %}
 <form method="GET"
       action="{% url 'expense_tracker_app:category' category.id  %}"
-      >
-    {{ form.as_p }}
+>
+    {{ form }}
     <button>Filter dates</button>
+    <button><a href="{% url 'expense_tracker_app:category' category.id  %}">Reset</a></button>
 
 </form>
-    <button>Reset</button>
+
+
 {% endif %}
-<ul>
+<table>
+    <tr bgcolor="navyblue">
+        <th width="150">Date:</th>
+        <th width="300">Description:</th>
+        <th width="150">Amount:</th>
+        <th width="150">Edit / delete:</th>
+
+    </tr>
     {% for expense in expenses %}
-    <li> {{ expense.date_added|date:'Y-M-d' }} -
-        {{ expense.description }} -
-        {{ expense.amount }} -
-        <a href="{% url 'expense_tracker_app:edit_expense' expense.id %}"> edit </a> -
-        <a href="{% url 'expense_tracker_app:delete_expense' expense.id %}"> delete </a>
-    </li>
+    <tr>
+        <td>{{ expense.date_added|date:'Y-M-d' }}</td>
+        <td>{{ expense.description }}</td>
+        <td>{{ expense.amount }}</td>
+        <td align="center"><a href="{% url 'expense_tracker_app:edit_expense' expense.id %}"> edit </a> -
+            <a href="{% url 'expense_tracker_app:delete_expense' expense.id %}"> delete </a></td>
+    </tr>
+
     {% empty %}
-    <li>No expenses to be listed in this category.</li>
+    <h2>There are no expenses in this category yet.</h2>
     {% endfor %}
-</ul>
+</table>
+
 {{ chart|safe }}
 <a href="{% url 'expense_tracker_app:add_expense' %}">Add a expense</a>
 {% endblock content %}

@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.widgets import AdminDateWidget
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 import plotly.express as px
 from .models import Category, Expense
@@ -83,10 +83,12 @@ def add_category(request):
 
 
 class AddExpense(CreateView):
+    """Add a new expense. Select a category from the list of previously added categories, connected to your user."""
     model = Expense
     fields = ('category', 'amount', 'date_added', 'description')
+    context_object_name = 'category_id'
     #    form_class = ExpenseForm
-    success_url = '/' # trzeba poprawic
+    #success_url = '/' # trzeba poprawic
 
     def get_form(self, form_class=None):
         form = super(AddExpense, self).get_form(form_class)
@@ -98,15 +100,30 @@ class AddExpense(CreateView):
         modelform.base_fields['category'].limit_choices_to = {'owner_id': self.request.user}
         return modelform
 
+    def get_success_url(self):
+        expense = self.object
+        category_id = expense.category.pk
+        return reverse('expense_tracker_app:category', kwargs={'category_id': category_id})
+
 
 class EditExpense(UpdateView):
+    """Edit a previously added expense."""
     model = Expense
     pk_url_kwarg = 'expense_id'
     fields = ('category', 'amount', 'date_added', 'description')
-    success_url = '/' # trzeba poprawic
+
+    def get_success_url(self):
+        expense = self.get_object()
+        category_id = expense.category.pk
+        return reverse_lazy('expense_tracker_app:category', kwargs={'category_id': category_id})
 
 
 class DeleteExpense(DeleteView):
+    """Delete a previously added expense."""
     model = Expense
     pk_url_kwarg = 'expense_id'
-    success_url = '/'
+
+    def get_success_url(self):
+        expense = self.get_object()
+        category_id = expense.category.pk
+        return reverse_lazy('expense_tracker_app:category', kwargs={'category_id': category_id})
