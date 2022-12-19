@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.widgets import AdminDateWidget
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+from django.db.models import Sum
+from django.core.paginator import Paginator
+import calendar
 import plotly.express as px
 from .models import Category, Expense
 from .forms import CategoryForm, DateForm, ExpenseForm
@@ -39,13 +43,26 @@ def category(request, category_id):
     if category.owner != request.user:
         raise Http404
     expenses = Expense.objects.filter(category=category)
+    if request.GET.get('start_of_month'):
+        # Set the start and end dates to the beginning and end of the current month
+        now = timezone.now()
+        start_date = now.replace(day=1)
+        end_date = now.replace(day=calendar.monthrange(now.year, now.month)[1])
+    else:
+        start_date = request.GET.get('start')
+        end_date = request.GET.get('end')
+    # Filter the expenses based on the start and end dates
+    if start_date:
+        expenses = expenses.filter(date_added__gte=start_date)
+    if end_date:
+        expenses = expenses.filter(date_added__lte=end_date)
+    total_expenses = expenses.aggregate(Sum('amount'))
+    total_expenses_amount = total_expenses['amount__sum']
+    formatted_total_expenses_amount = f"{total_expenses_amount:.2f}"
+    # paginator = Paginator(expenses, 5)  # Show 5 expenses per page
+    # page = request.GET.get('page')
+    # expenses = paginator.get_page(page)
     if expenses:
-        start = request.GET.get('start')
-        end = request.GET.get('end')
-        if start:
-            expenses = expenses.filter(date_added__gte=start)
-        if end:
-            expenses = expenses.filter(date_added__lte=end)
         fig = px.bar(
             x=[expense.date_added for expense in expenses],
             y=[expense.amount for expense in expenses],
@@ -54,11 +71,10 @@ def category(request, category_id):
                 'y': 'Amount PLN',
             },
             text=[expense.description for expense in expenses],
-
         )
         fig.update_layout(title_text='Expenses in this categoory:')
         chart = fig.to_html()
-        context = {'expenses': expenses, 'chart': chart, 'category': category, 'form': DateForm()}
+        context = {'expenses': expenses, 'chart': chart, 'category': category, 'form': DateForm(), 'total_expenses_amount': formatted_total_expenses_amount}
     else:
         context = {'expenses': expenses, 'category': category}
     return render(request, 'expense_tracker_app/category.html', context)
@@ -76,8 +92,7 @@ def add_category(request):
             new_category = form.save(commit=False)
             new_category.owner = request.user
             new_category.save()
-            return redirect(
-                'expense_tracker_app:index')  # Poprawić to przekierowanie gdy zdecyduję się czy kategorie będą wyświetlane z widoku klasy czy z widoku funkcji.
+            return redirect('expense_tracker_app:categories_class')
     context = {'form': form}
     return render(request, 'expense_tracker_app/add_category.html', context)
 
@@ -87,8 +102,6 @@ class AddExpense(CreateView):
     model = Expense
     fields = ('category', 'amount', 'date_added', 'description')
     context_object_name = 'category_id'
-    #    form_class = ExpenseForm
-    #success_url = '/' # trzeba poprawic
 
     def get_form(self, form_class=None):
         form = super(AddExpense, self).get_form(form_class)

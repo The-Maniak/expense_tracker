@@ -1,5 +1,6 @@
 from django import forms
-from .models import Category #, Expense
+from django.utils import timezone
+from .models import Category, Expense
 
 
 class CategoryForm(forms.ModelForm):
@@ -20,6 +21,16 @@ class ExpenseForm(forms.Form):
 
 
 class DateForm(forms.Form):
-    start = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    end = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    start = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    end = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set the start field to the date of the earliest expense in the database
+        earliest_expense = Expense.objects.order_by('date_added').first()
+        if earliest_expense:
+            self.fields['start'].initial = earliest_expense.date_added
+        # Set the end field to today's date
+        now = timezone.now()
+        self.fields['end'].initial = now
 

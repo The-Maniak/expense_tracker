@@ -11,14 +11,15 @@ ET - {{ category.text }} - expenses
 {% block content %}
 <h1> {{ category }} </h1>
 {% if expenses %}
-<form method="GET"
-      action="{% url 'expense_tracker_app:category' category.id  %}"
->
-    {{ form }}
-    <button>Filter dates</button>
+<form method="get">
+  {% for field in form %}
+    {{ field.label_tag }} {{ field }}
+  {% endfor %}
+  <input type="submit" value="Filter">
+    <input type="submit" name="start_of_month" value="From start of month">
     <button><a href="{% url 'expense_tracker_app:category' category.id  %}">Reset</a></button>
-
 </form>
+
 
 
 {% endif %}
@@ -28,7 +29,6 @@ ET - {{ category.text }} - expenses
         <th width="300">Description:</th>
         <th width="150">Amount:</th>
         <th width="150">Edit / delete:</th>
-
     </tr>
     {% for expense in expenses %}
     <tr>
@@ -42,6 +42,12 @@ ET - {{ category.text }} - expenses
     {% empty %}
     <h2>There are no expenses in this category yet.</h2>
     {% endfor %}
+    <tr bgcolor="lightgrey">
+        <th width="150">Number of entries: {{ expenses.count }}</th>
+        <th width="300">Total amount:</th>
+        <th width="150"> {{ total_expenses_amount }} </th>
+        <th width="150"></th>
+    </tr>
 </table>
 
 {{ chart|safe }}
