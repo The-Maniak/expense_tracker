@@ -1,0 +1,41 @@
+{% extends "expense_tracker_app/base.html" %}
+{% load expense_filters %}
+
+
+{% block title %}
+ET - Overview
+{% endblock title %}
+
+{% block page_header %}
+<p>Overview</p>
+{% endblock page_header %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table>
+                <tr bgcolor="navyblue">
+                    <th width="300">Category:</th>
+                    <th width="150">Total amount:</th>
+                </tr>
+                {% for category in categories %}
+                <tr>
+                    <td width="300">{{ category.text }}</td>
+                    <td width="150">{{ category|sum_expenses }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col">
+
+            {{ chart|safe }}
+
+
+        </div>
+
+    </div>
+    <p><a href="{% url 'expense_tracker_app:add_category' %}">Add a new category</a> -
+        <a href="{% url 'expense_tracker_app:add_expense' %}">Add a new expense</a></p>
+</div>
+{% endblock content %}

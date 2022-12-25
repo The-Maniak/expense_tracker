@@ -58,7 +58,8 @@ def category(request, category_id):
         expenses = expenses.filter(date_added__lte=end_date)
     total_expenses = expenses.aggregate(Sum('amount'))
     total_expenses_amount = total_expenses['amount__sum']
-    formatted_total_expenses_amount = f"{total_expenses_amount:.2f}"
+    if total_expenses_amount:
+        formatted_total_expenses_amount = f"{total_expenses_amount:.2f}"
     # paginator = Paginator(expenses, 5)  # Show 5 expenses per page
     # page = request.GET.get('page')
     # expenses = paginator.get_page(page)
@@ -74,7 +75,8 @@ def category(request, category_id):
         )
         fig.update_layout(title_text='Expenses in this categoory:')
         chart = fig.to_html()
-        context = {'expenses': expenses, 'chart': chart, 'category': category, 'form': DateForm(), 'total_expenses_amount': formatted_total_expenses_amount}
+        context = {'expenses': expenses, 'chart': chart, 'category': category, 'form': DateForm(),
+                   'total_expenses_amount': formatted_total_expenses_amount}
     else:
         context = {'expenses': expenses, 'category': category}
     return render(request, 'expense_tracker_app/category.html', context)
@@ -140,3 +142,39 @@ class DeleteExpense(DeleteView):
         expense = self.get_object()
         category_id = expense.category.pk
         return reverse_lazy('expense_tracker_app:category', kwargs={'category_id': category_id})
+
+
+class OverviewView(ListView):
+    model = Category
+    # template_name = 'overview.html'
+    context_object_name = 'categories'
+    ordering = ('text',)
+
+    def get(self, request):
+        categories = Category.objects.filter(owner=self.request.user)
+        expenses = Expense.objects.filter(category__in=categories, amount__gte=1)
+        expenses_total_amount = expenses.values('category').annotate(sum=Sum('amount'))
+        category_labels = [category.text for category in categories]
+        expense_values = [expense['sum'] for expense in expenses_total_amount]
+        fig = px.pie(
+            # labels=category_labels,
+            values=expense_values,
+        )
+        fig.update_traces(
+            title_text='Expenses by category in percent',
+            title_position='bottom center',
+            textposition='inside',
+            textinfo='text+percent',
+            text=[label for label in category_labels],
+            hovertext='percent',
+            #showlegend=True,
+            automargin=True,
+            insidetextorientation='radial',
+        )
+
+        chart = fig.to_html()
+        context = {
+            'categories': categories,
+            'chart': chart
+        }
+        return render(request, 'expense_tracker_app/overview.html', context)

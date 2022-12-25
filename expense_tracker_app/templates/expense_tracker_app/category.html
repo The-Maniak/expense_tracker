@@ -20,9 +20,6 @@ ET - {{ category.text }} - expenses
     <button><a href="{% url 'expense_tracker_app:category' category.id  %}">Reset</a></button>
 </form>
 
-
-
-{% endif %}
 <table>
     <tr bgcolor="navyblue">
         <th width="150">Date:</th>
@@ -40,7 +37,7 @@ ET - {{ category.text }} - expenses
     </tr>
 
     {% empty %}
-    <h2>There are no expenses in this category yet.</h2>
+    <h2>There are no expenses in this category for selected dates. Try selecting other dates.</h2>
     {% endfor %}
     <tr bgcolor="lightgrey">
         <th width="150">Number of entries: {{ expenses.count }}</th>
@@ -51,5 +48,10 @@ ET - {{ category.text }} - expenses
 </table>
 
 {{ chart|safe }}
+
+{% else %}
+<p>There are no expenses in this category - else block</p>
+{% endif %}
+
 <a href="{% url 'expense_tracker_app:add_expense' %}">Add a expense</a>
 {% endblock content %}

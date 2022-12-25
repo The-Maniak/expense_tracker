@@ -22,4 +22,6 @@ urlpatterns = [
     path('edit_expense/<int:expense_id>/', login_required(views.EditExpense.as_view()), name='edit_expense'),
     # Page for deleting existing expenses:
     path('delete_expense/<int:expense_id>/', login_required(views.DeleteExpense.as_view()), name='delete_expense'),
+    # Page displaying overview of all expenses per categories:
+    path('overview/', login_required(views.OverviewView.as_view()), name='overview'),
 ]
