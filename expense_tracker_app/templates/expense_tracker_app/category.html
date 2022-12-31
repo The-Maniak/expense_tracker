@@ -9,49 +9,59 @@ ET - {{ category.text }} - expenses
 {% endblock page_header %}
 
 {% block content %}
-<h1> {{ category }} </h1>
-{% if expenses %}
-<form method="get">
-  {% for field in form %}
-    {{ field.label_tag }} {{ field }}
-  {% endfor %}
-  <input type="submit" value="Filter">
-    <input type="submit" name="start_of_month" value="From start of month">
-    <button><a href="{% url 'expense_tracker_app:category' category.id  %}">Reset</a></button>
-</form>
+<div class="container">
+    <div class="row">
+        <h1> {{ category }} </h1>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            {% if expenses %}
+            <form method="get">
+                {% for field in form %}
+                {{ field.label_tag }} {{ field }}
+                {% endfor %}
+                <input type="submit" value="Filter">
+                <input type="submit" name="start_of_month" value="From start of month">
+                <button><a href="{% url 'expense_tracker_app:category' category.id  %}">Reset</a></button>
+            </form>
+        </div>
+        <div class="col-3">
+            <a href="{% url 'expense_tracker_app:add_expense' %}" class="btn btn-primary btn-sm">Add an expense</a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr bgcolor="navyblue">
+                <th>Date:</th>
+                <th>Description:</th>
+                <th>Amount:</th>
+                <th>Edit / delete:</th>
+            </tr>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.date_added|date:'Y-M-d' }}</td>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.amount }}</td>
+                <td align="center"><a href="{% url 'expense_tracker_app:edit_expense' expense.id %}"> edit </a> -
+                    <a href="{% url 'expense_tracker_app:delete_expense' expense.id %}"> delete </a></td>
+            </tr>
 
-<table>
-    <tr bgcolor="navyblue">
-        <th width="150">Date:</th>
-        <th width="300">Description:</th>
-        <th width="150">Amount:</th>
-        <th width="150">Edit / delete:</th>
-    </tr>
-    {% for expense in expenses %}
-    <tr>
-        <td>{{ expense.date_added|date:'Y-M-d' }}</td>
-        <td>{{ expense.description }}</td>
-        <td>{{ expense.amount }}</td>
-        <td align="center"><a href="{% url 'expense_tracker_app:edit_expense' expense.id %}"> edit </a> -
-            <a href="{% url 'expense_tracker_app:delete_expense' expense.id %}"> delete </a></td>
-    </tr>
-
-    {% empty %}
-    <h2>There are no expenses in this category for selected dates. Try selecting other dates.</h2>
-    {% endfor %}
-    <tr bgcolor="lightgrey">
-        <th width="150">Number of entries: {{ expenses.count }}</th>
-        <th width="300">Total amount:</th>
-        <th width="150"> {{ total_expenses_amount }} </th>
-        <th width="150"></th>
-    </tr>
-</table>
-
-{{ chart|safe }}
-
-{% else %}
-<p>There are no expenses in this category - else block</p>
-{% endif %}
-
-<a href="{% url 'expense_tracker_app:add_expense' %}">Add a expense</a>
+            {% empty %}
+            <h2>There are no expenses in this category for selected dates. Try selecting other dates.</h2>
+            {% endfor %}
+            <tr bgcolor="lightgrey">
+                <th width="150">Number of entries: {{ expenses.count }}</th>
+                <th width="300">Total amount:</th>
+                <th width="150"> {{ total_expenses_amount }}</th>
+                <th width="150"></th>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        {{ chart|safe }}"
+    </div>
+    {% else %}
+    <p>There are no expenses in this category - else block</p>
+    {% endif %}
+</div>
 {% endblock content %}
