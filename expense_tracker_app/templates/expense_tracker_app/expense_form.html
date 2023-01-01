@@ -16,13 +16,15 @@ ET - Add expense
             <div class="card-header">
                 <strong>Add an expense:</strong>
             </div>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button name="submit">Add expense</button>
-            </form>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-primary" name="submit">Add expense</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-    {% endblock content %}
+{% endblock content %}
