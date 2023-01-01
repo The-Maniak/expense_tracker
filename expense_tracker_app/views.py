@@ -81,7 +81,7 @@ def category(request, category_id):
         context = {'expenses': expenses, 'category': category}
     return render(request, 'expense_tracker_app/category.html', context)
 
-
+@login_required()
 def add_category(request):
     """Add a new category of expenses."""
     if request.method != 'POST':

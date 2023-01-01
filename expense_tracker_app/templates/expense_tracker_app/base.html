@@ -22,12 +22,18 @@
                 <li class="nav-item {% if url_name == 'index' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'expense_tracker_app:index' %}">Home</a>
                 </li>
-                <li class="nav-item {% if url_name == 'categories_function' %}active{% endif %}">
-                    <a class="nav-link" href="{% url 'expense_tracker_app:categories_function' %}">Categories
-                        F</a>
-                </li>
+                <!--                <li class="nav-item {% if url_name == 'categories_function' %}active{% endif %}">-->
+                <!--                    <a class="nav-link" href="{% url 'expense_tracker_app:categories_function' %}">Categories-->
+                <!--                        F</a>-->
+                <!--                </li>-->
                 <li class="nav-item {% if url_name == 'categories_class' %}active{% endif %}">
-                    <a class="nav-link" href="{% url 'expense_tracker_app:categories_class' %}">Categories C</a>
+                    <a class="nav-link" href="{% url 'expense_tracker_app:categories_class' %}">Categories</a>
+                </li>
+                <li class="nav-item {% if url_name == 'add_category' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'expense_tracker_app:add_category' %}">Add category</a>
+                </li>
+                <li class="nav-item {% if url_name == 'add_expense' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'expense_tracker_app:add_expense' %}">Add expense</a>
                 </li>
                 <li class="nav-item {% if url_name == 'overview' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'expense_tracker_app:overview' %}">Overview</a>
@@ -60,8 +66,8 @@
     <!--<div>{% block page_header %}{%endblock page_header %}</div>-->
     <div>{% block content %}{% endblock content%}</div>
 </div>
-<footer class="fixed-bottom">
-    <hr />
+<footer class="footer mt-auto py-1 sticky-bottom">
+    <hr/>
     <div class="container">
         <p class="text-secondary"><small> Copyright 2023 &#174; Wojciech Maniak</small></p>
     </div>

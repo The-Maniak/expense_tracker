@@ -8,13 +8,21 @@ ET - Add category
 {% endblock page_header %}
 
 {% block content %}
+<div class="container mt-auto pt-5">
+    <div class="row justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                <strong>Add a new category:</strong>
+              </div>
+                <form action="{% url 'expense_tracker_app:add_category' %}"
+                      method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
 
-<p>Add a new category:</p>
-<form action="{% url 'expense_tracker_app:add_category' %}"
-      method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button name="submit">Add</button>
-</form>
-
-{% endblock content %}
+                  <div class="d-flex justify-content-center">
+                    <button name="submit">Add</button>
+                </div>
+                </form>
+            </div>
+        </div>
+        {% endblock content %}

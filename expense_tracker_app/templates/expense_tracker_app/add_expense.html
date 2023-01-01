@@ -10,7 +10,12 @@ ET - Add expense
 {% endblock page_header %}
 
 {% block content %}
-
+<div class="container mt-auto pt-5">
+    <div class="row justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                <strong>Add a new category:</strong>
+              </div>
 <p>Category: {% render_field form.category class="custom-select mb-4" autocomplete="off" %}</p>
 <p>Amount: {% render_field form.amount  %}</p>
 <p>Date: {% render_field form.date_added class="DateInput" %}</p>
@@ -20,4 +25,7 @@ ET - Add expense
 {{ form.as_p }}
 <button name="submit">Submit</button>
 </form>
+            </div>
+    </div>
+</div>
 {% endblock content %}
