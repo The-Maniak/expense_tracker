@@ -11,15 +11,34 @@ ET - home page
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-7">
-            <p>Text</p>
+        <div class="col-7 pt-5">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dui ipsum, tempor in vulputate vitae,
+                accumsan eu nunc. Aliquam erat volutpat. Suspendisse egestas egestas orci quis sagittis. Sed nulla eros,
+                porttitor quis consequat et, volutpat ac felis. Quisque accumsan, nisl sed congue tristique, lectus dui
+                aliquet libero, quis vulputate arcu diam eget sapien. Donec condimentum dolor ut nunc efficitur, ut
+                aliquam leo sodales. Nam varius et augue a pulvinar. Pellentesque ornare, nulla a pretium ultricies,
+                sapien felis placerat felis, eu aliquam purus nibh vitae sem.</p>
+
+            <p>Phasellus justo libero, bibendum ac dignissim et, imperdiet sit amet lorem. Mauris nec ullamcorper elit.
+                Suspendisse potenti. Ut ut viverra eros, et semper diam. Aliquam bibendum pharetra mattis. Donec auctor
+                semper odio, id pharetra elit consequat commodo. Praesent sagittis augue a scelerisque blandit. Duis
+                tincidunt lorem congue ante iaculis, eu auctor eros iaculis. Praesent nulla metus, cursus quis sem vel,
+                placerat sollicitudin ante.</p>
+            <p>Phasellus accumsan accumsan magna. Sed consequat eros nisi, eu volutpat dolor venenatis eget. Sed augue
+                quam, lobortis eleifend elit nec, ultrices faucibus enim. Quisque purus ante, eleifend ut sapien ut,
+                tristique malesuada nisi. Nulla eget fermentum quam. Ut tincidunt, mauris at pretium cursus, arcu mauris
+                vulputate ipsum, non scelerisque metus ex vitae enim.</p>
+            {% if user.is_authenticated %}
             <p>
                 <a href="{% url 'expense_tracker_app:add_category' %}" class="btn btn-primary btn-lg" mx="5">Add a
                     category</a>
                 <a href="{% url 'expense_tracker_app:add_expense' %}" class="btn btn-primary btn-lg">Add an expense</a>
             </p>
+            {% else %}
+            <p></p>
+            {% endif %}
         </div>
-        <div class="col-5">
+        <div class="col-5 pt-5">
             <img src="http://images.clipartpanda.com/empty-pocket-clipart-emptypockets.png" class="img-fluid">
         </div>
     </div>

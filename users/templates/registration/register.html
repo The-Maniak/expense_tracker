@@ -7,14 +7,24 @@ ET - Register
 {% endblock page_header %}
 
 {% block content %}
-
-<form method="post"
-      action="{% url 'users:register' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button name="submit">Register</button>
-  <input type="hidden"
-         name="next"
-         value="{% url 'expense_tracker_app:index' %}"/>
-</form>
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="card">
+            <div class="card-header text-center">
+                <strong>Register</strong>
+            </div>
+            <form method="post"
+                  action="{% url 'users:register' %}">
+                {% csrf_token %}
+                {{ form.as_p}}
+                <div class="d-flex justify-content-center">
+                    <button name="submit">Register</button>
+                </div>
+                <input type="hidden"
+                       name="next"
+                       value="{% url 'expense_tracker_app:index' %}"/>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}

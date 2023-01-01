@@ -7,18 +7,30 @@ ET - Log in
 {% endblock page_header %}
 
 {% block content %}
-
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-<form method="post"
-      action="{% url 'users:login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button name="submit">Log in</button>
-  <input type="hidden"
-         name="next"
-         value="{% url 'expense_tracker_app:index' %}"/>
-</form>
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                <strong>Please enter you login and password</strong>
+            </div>
+            <form method="post"
+                  action="{% url 'users:login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Your username and password didn't match. Please try again.
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-center">
+                    <button name="submit">Log in</button>
+                </div>
+                <input type="hidden"
+                       name="next"
+                       value="{% url 'expense_tracker_app:index' %}"/>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 {% endblock content %}
