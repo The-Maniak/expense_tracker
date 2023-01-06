@@ -7,29 +7,21 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['text']
-        labels = {'text': ''} # Here we can add some text above the inserted category title:
+        labels = {'text': ''}  # Here we can add some text above the inserted category title:
         widgets = {'text': forms.TextInput(attrs={'class': 'form-control'})}
-
 
 
 class ExpenseForm(forms.Form):
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
         initial=Category.pk,
-        # widget=forms.Select(attrs= {'class': 'form-control'}),
     )
     amount = forms.DecimalField(
         max_digits=10,
         decimal_places=2,
-        # widget=forms.NumberInput(attrs={'class': 'form-control'})
     )
-    date_added = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
-    description = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-
-    # def __init__(self, *args, **kwargs):
-    #     super(ExpenseForm, self).__init__(*args, **kwargs)
-    #     for visible in self.visible_fields():
-    #         visible.field.widget.attrs['class'] = 'form-control'
+    date_added = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', }))
+    description = forms.CharField(max_length=100, )
 
 
 class DateForm(forms.Form):
@@ -45,4 +37,3 @@ class DateForm(forms.Form):
         # Set the end field to today's date
         now = timezone.now()
         self.fields['end'].initial = now
-

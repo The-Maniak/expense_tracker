@@ -107,7 +107,10 @@ class AddExpense(CreateView):
 
     def get_form(self, form_class=None):
         form = super(AddExpense, self).get_form(form_class)
-        form.fields['date_added'].widget = AdminDateWidget(attrs={'type': 'date'})
+        form.fields['date_added'].widget = AdminDateWidget(attrs={'type': 'date',})
+        for field in form.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
         return form
 
     def get_form_class(self):
