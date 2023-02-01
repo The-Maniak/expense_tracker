@@ -12,28 +12,30 @@ ET - Add expense
 {% block content %}
 <div class="container mt-auto pt-5">
     {% if not categories %}
-        <div class="text-center">
-            <h3>Looks like there are no categories yet.</h3>
-            <p>Start by adding a category.</p>
-            <p><a href="{% url 'expense_tracker_app:add_category' %}" class="btn btn-primary">Add a new category</a>
-            </p>
-        </div>
-    {% endif %}
+    <div class="text-center">
+        <h3>Looks like there are no categories yet.</h3>
+        <p>Start by adding a category.</p>
+        <p><a href="{% url 'expense_tracker_app:add_category' %}" class="btn btn-primary">Add a new category</a>
+        </p>
+    </div>
+    {% else %}
     <div class="row justify-content-center">
         <div class="card">
             <div class="card-header">
-                <strong>Add a new category:</strong>
+                <strong>Add a new expense:</strong>
             </div>
-            <p>Category: {% render_field form.category class="custom-select mb-4" autocomplete="off" %}</p>
-            <p>Amount: {% render_field form.amount %}</p>
-            <p>Date: {% render_field form.date_added class="DateInput" %}</p>
-            <p>Description: {% render_field form.description class="TextInput" %}</p>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button name="submit">Submit</button>
-            </form>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="text-center">
+                        <button class="btn btn-primary" name="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+    {% endif %}
+
 </div>
 {% endblock content %}

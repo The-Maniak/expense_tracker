@@ -5,13 +5,13 @@ ET - {{ category.text }} - expenses
 {% endblock title %}
 
 {% block page_header %}
-<p>ET - {{ category }} - expenses:</p>
+<span>Home -> Categories -> {{ category }}</span>
 {% endblock page_header %}
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <h1> {{ category }} </h1>
+     <div class="page-title">
+        <span>{{ category }}</span>
     </div>
     <div class="row">
         <div class="col-9">

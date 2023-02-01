@@ -108,7 +108,7 @@ class AddExpense(CreateView):
 
     def get_form(self, form_class=None):
         form = super(AddExpense, self).get_form(form_class)
-        form.fields['date_added'].widget = AdminDateWidget(attrs={'type': 'date',})
+        form.fields['date_added'].widget = AdminDateWidget(attrs={'type': 'date', })
         for field in form.fields.values():
             field.widget.attrs.update({'class': 'form-control'})
 
@@ -118,6 +118,14 @@ class AddExpense(CreateView):
         modelform = super().get_form_class()
         modelform.base_fields['category'].limit_choices_to = {'owner_id': self.request.user}
         return modelform
+
+    def get(self, request):
+        categories = Category.objects.filter(owner=self.request.user)
+        context = {'categories': categories}
+        if categories:
+            additional_context = {'form': self.get_form()}
+            context.update(additional_context)
+        return render(request, 'expense_tracker_app/add_expense.html', context)
 
     def get_success_url(self):
         expense = self.object

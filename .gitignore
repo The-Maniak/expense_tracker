@@ -1,5 +1,5 @@
 ll_env
 et_env
-__pychache__/
+__pycache__/
 .idea
 db.sqlite3
