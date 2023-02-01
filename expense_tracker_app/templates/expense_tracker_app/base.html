@@ -28,7 +28,7 @@
                     <a class="nav-link" href="{% url 'expense_tracker_app:overview' %}">Overview</a>
                 </li>
                 <li class="nav-item {% if url_name == 'categories_class' %}active{% endif %}">
-                    <a class="nav-link" href="{% url 'expense_tracker_app:categories_class' %}">List of categories</a>
+                    <a class="nav-link" href="{% url 'expense_tracker_app:categories' %}">List of categories</a>
                 </li>
                 <li class="nav-item {% if url_name == 'add_category' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'expense_tracker_app:add_category' %}">Add category</a>

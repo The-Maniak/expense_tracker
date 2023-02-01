@@ -1,7 +1,6 @@
 {% extends "expense_tracker_app/base.html" %}
 {% load expense_filters %}
 
-
 {% block title %}
 ET - Overview
 {% endblock title %}
@@ -12,40 +11,63 @@ ET - Overview
 
 {% block content %}
 <div class="container">
-    <div class="row my-5">
-        <h3>Your expenses overview:</h3>
-    </div>
-    <div class="row my-5">
-        <div class="col">
-            <div class="row d-flex justify-content-center ">
-                <table>
-                    <tr bgcolor="navyblue">
-                        <th width="300">Category:</th>
-                        <th width="150">Total amount:</th>
-                    </tr>
-                    {% for category in categories %}
-                    <tr>
-                        <td width="300">{{ category.text }}</td>
-                        <td width="150">{{ category|sum_expenses }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+    {% if categories %}
+        {% if expenses %}
+            <div class="row my-5">
+                <h3>Your expenses overview:</h3>
             </div>
-            <div class="row d-flex justify-content-center mt-4">
-                <a href="{% url 'expense_tracker_app:add_category' %}"
-                   class="btn btn-primary btn-lg mx-2">Add a new category</a>
-                <a href="{% url 'expense_tracker_app:add_expense' %}" class="btn btn-primary btn-lg mx-2">Add a new
-                    expense</a>
+            <div class="row my-5">
+                <div class="col">
+                    <div class="row d-flex justify-content-center ">
+                        <table>
+                            <tr bgcolor="navyblue">
+                                <th width="300">Category:</th>
+                                <th width="150">Total amount:</th>
+                            </tr>
+                            {% for category in categories %}
+                            <tr>
+                                <td width="300">{{ category.text }}</td>
+                                <td width="150">{{ category|sum_expenses }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-4">
+                        <a href="{% url 'expense_tracker_app:add_category' %}"
+                           class="btn btn-primary btn-lg mx-2">Add a new category</a>
+                        <a href="{% url 'expense_tracker_app:add_expense' %}" class="btn btn-primary btn-lg mx-2">Add a new
+                            expense</a>
+                    </div>
+                </div>
+                <div class="col">
+                    {{ chart|safe }}
+                </div>
+            </div>
+        {% else %}
+            <div class="row my-4">
+                <div class="col-12">
+                    <div class="text-center">
+                        <h3>Looks like there are no expenses yet.</h3>
+                        <p>Start by adding an expense.</p>
+                        <p><a href="{% url 'expense_tracker_app:add_expense' %}" class="btn btn-primary">Add a new expense</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="row my-4">
+            <div class="col-12">
+                <div class="text-center">
+                    <h3>Looks like there are no categories yet.</h3>
+                    <p>Start by adding a category.</p>
+                    <p><a href="{% url 'expense_tracker_app:add_category' %}" class="btn btn-primary">Add a new category</a>
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="col">
+    {% endif %}
 
-            {{ chart|safe }}
-
-
-        </div>
-
-    </div>
 
 </div>
 {% endblock content %}

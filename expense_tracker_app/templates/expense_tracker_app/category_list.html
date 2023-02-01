@@ -10,24 +10,25 @@ ET - Categories
 
 {% block content %}
 <div class="container">
-    <div class="row my-4 d-flex justify-content-center">
-        {% if categories %}
-        <h3>Your expense categories:</h3>
-        {% else %}
-        <h3>Looks like there are no categories yet.</h3>
-        {% endif %}
-    </div>
-    <div class="row my-3 d-flex justify-content-center">
-        <ul class="list-group w-50">
-            {% for category in object_list %}
-            <a href="{% url 'expense_tracker_app:category' category.id %}"
-               class="list-group-item list-group-item-action w-500"> {{ category }} </a>
-            {% empty %}
-            <p>Start by adding a category.</p>
-            <p><a href="{% url 'expense_tracker_app:add_category' %}"
-                  class="btn btn-primary btn-lg mx-2">Add a new category</a></p>
-            {% endfor %}
-        </ul>
+    <div class="row my-4">
+        <div class="col-12">
+            {% if categories %}
+            <h3>Your expense categories:</h3>
+            <ul class="list-group w-50">
+                {% for category in categories %}
+                <a href="{% url 'expense_tracker_app:category' category.id %}"
+                   class="list-group-item list-group-item-action w-500"> {{ category }} </a>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="text-center">
+                <h3>Looks like there are no categories yet.</h3>
+                <p>Start by adding a category.</p>
+                <p><a href="{% url 'expense_tracker_app:add_category' %}"
+                      class="btn btn-primary btn">Add a new category</a></p>
+            </div>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock content %}

@@ -9,12 +9,13 @@ ET - Log in
 {% block content %}
 <div class="container pt-5">
     <div class="row justify-content-center">
-        <div class="card">
-            <div class="card-header">
-                <strong>Please enter you login and password</strong>
-            </div>
-            <div class="card-body">
-                <form method="post" action="{% url 'users:login' %}">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Please enter you login and password</strong>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'users:login' %}">
                         {% csrf_token %}
                         <div class="form-group">
                             <label>Login:</label>
@@ -25,19 +26,19 @@ ET - Log in
                             {{ form.password }}
                         </div>
                         {% if form.username.errors %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ form.username.errors }}
-                            </div>
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.username.errors }}
+                        </div>
                         {% endif %}
                         {% if form.password.errors %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ form.password.errors }}
-                            </div>
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.password.errors }}
+                        </div>
                         {% endif %}
                         {% if form.non_field_errors %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ form.non_field_errors }}
-                            </div>
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.non_field_errors }}
+                        </div>
                         {% endif %}
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" name="submit">Log in</button>
@@ -46,6 +47,7 @@ ET - Log in
                                name="next"
                                value="{% url 'expense_tracker_app:index' %}"/>
                     </form>
+                </div>
             </div>
         </div>
     </div>

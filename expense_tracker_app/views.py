@@ -28,9 +28,10 @@ def categories(request):
 
 
 class CategoryView(ListView):
-    """Page where user can see his expenses. Displayed as class.
+    """Page where user can see his categories. Displayed as class.
     The @login_required decorator for the class view is applied in the views.py file."""
     model = Category
+    context_object_name = 'categories'
 
     def get_queryset(self):
         return Category.objects.filter(owner=self.request.user)
@@ -178,6 +179,7 @@ class OverviewView(ListView):
         chart = fig.to_html()
         context = {
             'categories': categories,
-            'chart': chart
+            'chart': chart,
+            'expenses': expenses,
         }
         return render(request, 'expense_tracker_app/overview.html', context)

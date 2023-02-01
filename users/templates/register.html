@@ -9,22 +9,26 @@ ET - Register
 {% block content %}
 <div class="container pt-5">
     <div class="row justify-content-center">
-        <div class="card">
-            <div class="card-header text-center">
-                <strong>Register</strong>
-            </div>
-            <div class="card-body">
-                <form method="post"
-                      action="{% url 'users:register' %}">
-                    {% csrf_token %}
-                    {{ form.as_p}}
-                    <div class="d-flex justify-content-center">
-                        <button name="submit">Register</button>
-                    </div>
-                    <input type="hidden"
-                           name="next"
-                           value="{% url 'expense_tracker_app:index' %}"/>
-                </form>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <strong>Register</strong>
+                </div>
+                <div class="card-body">
+                    <form method="post"
+                          action="{% url 'users:register' %}">
+                        {% csrf_token %}
+                        {{ form.as_p}}
+                        <div class="d-flex justify-content-center">
+                            <div class="d-flex justify-content-center">
+                            <button class="btn btn-primary" name="submit">Register</button>
+                        </div>
+                        </div>
+                        <input type="hidden"
+                               name="next"
+                               value="{% url 'expense_tracker_app:index' %}"/>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

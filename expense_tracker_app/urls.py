@@ -10,7 +10,7 @@ urlpatterns = [
     # Expense categories page (function):
     path('categories_function/', views.categories, name='categories_function'),
     # Expense categories page (class):
-    path('categories_class/', login_required(views.CategoryView.as_view()), name='categories_class'),
+    path('categories/', login_required(views.CategoryView.as_view()), name='categories'),
     # Individual expenses page per category:
     path('category/<int:category_id>/', views.category, name='category'),
     # Page for adding new categories of expenses:
