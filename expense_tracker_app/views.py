@@ -74,13 +74,14 @@ def category(request, category_id):
             },
             text=[expense.description for expense in expenses],
         )
-        fig.update_layout(title_text='Expenses in this categoory:')
+        # fig.update_layout(title_text='Expenses in this categoory:')
         chart = fig.to_html()
         context = {'expenses': expenses, 'chart': chart, 'category': category, 'form': DateForm(),
                    'total_expenses_amount': formatted_total_expenses_amount}
     else:
         context = {'expenses': expenses, 'category': category}
     return render(request, 'expense_tracker_app/category.html', context)
+
 
 @login_required()
 def add_category(request):
@@ -98,6 +99,15 @@ def add_category(request):
             return redirect('expense_tracker_app:categories_class')
     context = {'form': form}
     return render(request, 'expense_tracker_app/add_category.html', context)
+
+
+class DeleteCategory(DeleteView):
+    """Delete an existing category."""
+    model = Category
+    pk_url_kwarg = 'category_id'
+
+    def get_success_url(self):
+        return reverse_lazy('expense_tracker_app:categories')
 
 
 class AddExpense(CreateView):
@@ -157,8 +167,9 @@ class DeleteExpense(DeleteView):
 
 
 class OverviewView(ListView):
+    """This view presents information of the user's whole expenses in the database divided by categories.
+    It allows to see the on a pie chart the proportion between spending per each category"""
     model = Category
-    # template_name = 'overview.html'
     context_object_name = 'categories'
     ordering = ('text',)
 
@@ -179,7 +190,7 @@ class OverviewView(ListView):
             textinfo='text+percent',
             text=[label for label in category_labels],
             hovertext='percent',
-            #showlegend=True,
+            # showlegend=True,
             automargin=True,
             insidetextorientation='radial',
         )

@@ -1,40 +1,54 @@
 {% extends "expense_tracker_app/base.html" %}
+{% load static %}
 {% block title %}
 ET - home page
 {% endblock title %}
 
+{% block page_header %}
+<!--<span>Home page</span>-->
+{% endblock page_header %}
+
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-7 pt-5">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dui ipsum, tempor in vulputate vitae,
-                accumsan eu nunc. Aliquam erat volutpat. Suspendisse egestas egestas orci quis sagittis. Sed nulla eros,
-                porttitor quis consequat et, volutpat ac felis. Quisque accumsan, nisl sed congue tristique, lectus dui
-                aliquet libero, quis vulputate arcu diam eget sapien. Donec condimentum dolor ut nunc efficitur, ut
-                aliquam leo sodales. Nam varius et augue a pulvinar. Pellentesque ornare, nulla a pretium ultricies,
-                sapien felis placerat felis, eu aliquam purus nibh vitae sem.</p>
+        <div class="col mt-5">
+            <div class="page-title">
+                <span>Expense Tracker App - Home Page</span>
+            </div>
+        </div>
 
-            <p>Phasellus justo libero, bibendum ac dignissim et, imperdiet sit amet lorem. Mauris nec ullamcorper elit.
-                Suspendisse potenti. Ut ut viverra eros, et semper diam. Aliquam bibendum pharetra mattis. Donec auctor
-                semper odio, id pharetra elit consequat commodo. Praesent sagittis augue a scelerisque blandit. Duis
-                tincidunt lorem congue ante iaculis, eu auctor eros iaculis. Praesent nulla metus, cursus quis sem vel,
-                placerat sollicitudin ante.</p>
-            <p>Phasellus accumsan accumsan magna. Sed consequat eros nisi, eu volutpat dolor venenatis eget. Sed augue
-                quam, lobortis eleifend elit nec, ultrices faucibus enim. Quisque purus ante, eleifend ut sapien ut,
-                tristique malesuada nisi. Nulla eget fermentum quam. Ut tincidunt, mauris at pretium cursus, arcu mauris
-                vulputate ipsum, non scelerisque metus ex vitae enim.</p>
+    </div>
+    <div class="row">
+        <div class="col-7 pt-5">
             {% if user.is_authenticated %}
+            <p>Hi {{ user.username }}, nice to see you are in control!</p>
             <p>
-                <a href="{% url 'expense_tracker_app:add_category' %}" class="btn btn-primary">Add a
+                <a href="{% url 'expense_tracker_app:add_category' %}" class="btn btn-info">Add a
                     category</a>
-                <a href="{% url 'expense_tracker_app:add_expense' %}" class="btn btn-primary">Add an expense</a>
+                <a href="{% url 'expense_tracker_app:add_expense' %}" class="btn btn-info">Add an expense</a>
             </p>
             {% else %}
-            <p></p>
+            <p>How many times have you asked yourself "where's my money?!" How many times have you experienced that
+                uncomfortable situation, when you're at the cash counter, trying to make a payment and failing to do
+                so?</p>
+            <p>Well if it was even once, than you're correct thinking it was one time too many. But don't worry, it
+                won't happen again. </p>
+            <p>The Expense Tracker Application is a simple but efficient online platform, which is going to help you
+                keep track of your spending. And more awareness of where does your money go will surely mean less
+                surprises that it is not where you expected it to be - your account.</p>
+            <p>So go ahead, create an account and start being in control from right now onwards!</p>
+            <p>
+                <a href="{% url 'users:login' %}" class="btn btn-info">Log in</a>
+                <a href="{% url 'users:register' %}" class="btn btn-info">Create an account</a>
+            </p>
             {% endif %}
         </div>
         <div class="col-5 pt-5">
-            <img src="http://images.clipartpanda.com/empty-pocket-clipart-emptypockets.png" class="img-fluid">
+            {% if user.is_authenticated %}
+            <img src="{% static 'pics/guy-in-control.png' %}" class="img-fluid">
+            {% else %}
+            <img src="{% static 'pics/empty-pocket-guy.png' %}" class="img-fluid">
+            {% endif %}
         </div>
     </div>
     <div class="row">

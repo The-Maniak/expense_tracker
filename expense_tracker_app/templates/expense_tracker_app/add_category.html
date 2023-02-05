@@ -4,7 +4,7 @@
 ET - Add category
 {% endblock title %}
 {% block page_header %}
-<p>Expense tracker - Add category header</p>
+<span> <a href="{% url 'expense_tracker_app:index' %}" class="text-decoration-none">Home</a> -> Add category </span>
 {% endblock page_header %}
 
 {% block content %}
@@ -21,7 +21,7 @@ ET - Add category
                     {{ form.as_p }}
 
                   <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary" name="submit">Add</button>
+                    <button class="btn btn-info" name="submit">Add</button>
                 </div>
                 </form>
             </div>

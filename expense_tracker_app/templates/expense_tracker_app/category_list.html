@@ -5,7 +5,7 @@ ET - Categories
 {% endblock title %}
 
 {% block page_header %}
-<span>Home -> Categories</span>
+<span> <a href="{% url 'expense_tracker_app:index' %}" class="text-decoration-none">Home</a> -> Categories</span>
 {% endblock page_header %}
 
 {% block content %}
@@ -37,7 +37,7 @@ ET - Categories
                 <h3>Looks like there are no categories yet.</h3>
                 <p>Start by adding a category.</p>
                 <p><a href="{% url 'expense_tracker_app:add_category' %}"
-                      class="btn btn-primary btn">Add a new category</a></p>
+                      class="btn btn-info btn">Add a new category</a></p>
             </div>
             {% endif %}
         </div>

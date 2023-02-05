@@ -16,3 +16,4 @@ sqlparse==0.4.3
 statsmodels==0.13.5
 tenacity==8.1.0
 tzdata==2022.6
+whitenoise==6.3.0
