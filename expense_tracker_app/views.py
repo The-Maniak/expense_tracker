@@ -96,7 +96,7 @@ def add_category(request):
             new_category = form.save(commit=False)
             new_category.owner = request.user
             new_category.save()
-            return redirect('expense_tracker_app:categories_class')
+            return redirect('expense_tracker_app:categories')
     context = {'form': form}
     return render(request, 'expense_tracker_app/add_category.html', context)
 

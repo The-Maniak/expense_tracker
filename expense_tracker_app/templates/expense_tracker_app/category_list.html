@@ -17,7 +17,7 @@ ET - Categories
                 <span>Your expense categories</span>
             </div>
             <div class="row">
-                <div class="d-flex flex-wrap">
+                <div class="d-flex flex-wrap w-100">
                     {% for category in categories %}
                     <div class="col-3 mb-3">
                         <a href="{% url 'expense_tracker_app:category' category.id %}"
